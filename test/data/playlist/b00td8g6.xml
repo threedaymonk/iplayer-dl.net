@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist xmlns="http://bbc.co.uk/2008/emp/playlist" revision="1">
+  <config>
+    <plugin name="iPlayerLiveStats"/>
+    <plugin name="spacesReporting"/>
+  </config>
+  <id>tag:bbc.co.uk,2008:pips:b00td8g6:playlist</id>
+  <link rel="self" href="http://www.bbc.co.uk/iplayer/playlist/b00td8g6/"/>
+  <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00td8g6/BBC_Proms_2010_Sondheims_80th_Birthday_Celebration/"/>
+  <link rel="holding" href="http://node1.bbcimg.co.uk/iplayer/images/episode/b00td8g6_640_360.jpg" height="360" width="640" type="image/jpeg" />
+  <title>BBC Proms: 2010: Sondheim's 80th Birthday Celebration</title>
+  <summary>Katie Derham introduces a concert marking the 80th birthday of one of Broadway's great innovators, featuring excerpts from hit shows including A Little Night Music.</summary>
+  <updated>2010-07-26T12:43:01Z</updated>
+  <rights>
+    <right name="embed">unset</right>
+  </rights>
+  <item kind="ident">
+    <id>tag:bbc.co.uk,2008:pips:bbc_four</id>
+    <mediator identifier="bbc_four" name="pips"/>
+  </item>
+  <item kind="programme" duration="7200" identifier="b00td81r" group="b00td8g6" publisher="pips">
+    <id>tag:bbc.co.uk,2008:pips:b00td81r</id>
+    <service id="bbc_two" href="http://www.bbc.co.uk/iplayer/bbc_two">BBC Two</service>
+    <masterbrand id="bbc_four" href="http://www.bbc.co.uk/iplayer/bbc_four">BBC Four</masterbrand>
+    <programmeBrand id="b007v097">BBC Proms</programmeBrand>
+    <passionSite href="http://www.bbc.co.uk/programmes/b007v097/microsite">BBC Proms</passionSite>
+    <alternate id="default" />
+    <programmeSeries id="b00t02py">2010</programmeSeries>
+    <mediator identifier="b00td81r" name="pips"/>
+  </item>
+  <relatedLink>
+    <id>tag:bbc.co.uk,2008:iplayer:concept_pid:b00szyj6</id>
+    <title>BBC Proms: 2010: Prom 15: Stockhausen, Matthews, Schumann - Part 3</title>
+    <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00szyj6/BBC_Proms_2010_Prom_15_Stockhausen_Matthews_Schumann_Part_3/" />
+    <link rel="thumb" href="http://node1.bbcimg.co.uk/iplayer/images/episode/b00szyj6_150_84.jpg" type="image/jpeg" width="150" height="84" />
+    <summary>Oliver Knussen conducts the BBC Symphony Orchestra in Bernd Alois Zimmermann's merry Rhine-Church Festival Dances and Schumann's evocative Symphony No 3 (Rhenish).</summary>
+  </relatedLink>
+  <relatedLink>
+    <id>tag:bbc.co.uk,2008:iplayer:concept_pid:b00t1xnk</id>
+    <title>BBC Proms: 2010: Prom 19: Sondheim at 80 - Part 2</title>
+    <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00t1xnk/BBC_Proms_2010_Prom_19_Sondheim_at_80_Part_2/" />
+    <link rel="thumb" href="http://node2.bbcimg.co.uk/iplayer/images/episode/b00t1xnk_150_84.jpg" type="image/jpeg" width="150" height="84" />
+    <summary>Continued celebration of Stephen Sondheim's 80th birthday, with a cast of stars and the BBC Concert Orchestra with David Charles Abell performing songs from his best-loved shows.</summary>
+  </relatedLink>
+</playlist>

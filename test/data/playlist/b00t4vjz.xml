@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist xmlns="http://bbc.co.uk/2008/emp/playlist" revision="1">
+  <config>
+    <plugin name="iPlayerLiveStats"/>
+    <plugin name="spacesReporting"/>
+  </config>
+  <id>tag:bbc.co.uk,2008:pips:b00t4vjz:playlist</id>
+  <link rel="self" href="http://www.bbc.co.uk/iplayer/playlist/b00t4vjz/"/>
+  <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00t4vjz/Afternoon_Play_Depth_Charge/"/>
+  <link rel="holding" href="http://node2.bbcimg.co.uk/iplayer/images/episode/b00t4vjz_640_360.jpg" height="360" width="640" type="image/jpeg" />
+  <title>Afternoon Play: Depth Charge</title>
+  <summary>By Fiona Mackie. Den, a retired submariner, is short on cash and short on dreams until Joe enters his life and promises him the chance to breathe again.</summary>
+  <updated>2010-07-22T23:08:43Z</updated>
+  <rights>
+    <right name="embed">unset</right>
+  </rights>
+  <item kind="radioProgramme" duration="2700" identifier="b00t4twn" group="b00t4vjz" publisher="pips">
+    <title>Afternoon Play: Depth Charge</title>
+    <broadcast>2010-07-30T13:15:00Z</broadcast>
+    <service id="bbc_radio_four" href="http://www.bbc.co.uk/iplayer/bbc_radio_four">BBC Radio 4</service>
+    <masterbrand id="bbc_radio_four" href="http://www.bbc.co.uk/iplayer/bbc_radio_four">BBC Radio 4</masterbrand>
+    <passionSite href="http://www.bbc.co.uk/programmes/b006qrzz/microsite">Afternoon Play</passionSite>
+    <alternate id="default" />
+    <mediator identifier="b00t4twn" name="pips"/>
+  </item>
+  <relatedLink>
+    <id>tag:bbc.co.uk,2008:iplayer:concept_pid:b00t4qk8</id>
+    <title>Afternoon Play: Terremoto</title>
+    <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00t4qk8/Afternoon_Play_Terremoto/" />
+    <link rel="thumb" href="http://node2.bbcimg.co.uk/iplayer/images/episode/b00t4qk8_150_84.jpg" type="image/jpeg" width="150" height="84" />
+    <summary>By Catrin Clarke. Daniel is running in the Chilean desert, while Ayelen is driving across it. And when an earthquake hits, they become reluctant travelling companions.</summary>
+  </relatedLink>
+  <relatedLink>
+    <id>tag:bbc.co.uk,2008:iplayer:concept_pid:b00t3z6f</id>
+    <title>Afternoon Play: Humanly Possible</title>
+    <link rel="alternate" href="http://www.bbc.co.uk/iplayer/episode/b00t3z6f/Afternoon_Play_Humanly_Possible/" />
+    <link rel="thumb" href="http://node1.bbcimg.co.uk/iplayer/images/episode/b00t3z6f_150_84.jpg" type="image/jpeg" width="150" height="84" />
+    <summary>Sarah Daniels's play follows two babies, their parents and staff through one day in a neonatal intensive care unit.</summary>
+  </relatedLink>
+</playlist>
