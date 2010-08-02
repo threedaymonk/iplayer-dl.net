@@ -1,10 +1,10 @@
 TESTS   = Dir["test/**/*.cs"]
 SOURCES = Dir["src/**/*.cs"]
-ASSEMBLIES = %w[System.Xml.Linq System.Core]
+ASSEMBLIES = %w[System.Xml.Linq System.Core HtmlAgilityPack]
 
 def gmcs(*items)
   system *(
-    ["gmcs"] +
+    ["gmcs", "-lib:lib"] +
     ASSEMBLIES.map{ |a| "-r:#{a}.dll" } +
     items
   )
@@ -16,6 +16,7 @@ file "test.dll" => TESTS + SOURCES do |t|
 end
 
 task :test => "test.dll" do
+  ENV["MONO_PATH"] = "lib"
   system "nunit-console", "test.dll"
   rm_rf '%temp%'
 end
