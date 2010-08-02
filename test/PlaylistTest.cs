@@ -12,7 +12,7 @@ public class PlaylistTest {
   }
 }
 
-[TestFixture] public class PlaylistUrlTest : PlaylistTest {
+[TestFixture] public class PlaylistUrlTest {
   [Test] public void ShouldGenerateUrlForPid() {
     Assert.AreEqual("http://www.bbc.co.uk/iplayer/playlist/b00t4vjz", Playlist.Url("b00t4vjz"));
   }

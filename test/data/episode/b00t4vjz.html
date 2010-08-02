@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<html>
+  <head>
+    <title>BBC iPlayer - Afternoon Play</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="apple-touch-fullscreen" content="YES" />
+    <link rel="apple-touch-icon-precomposed" href="http://static.bbc.co.uk/mobile/iplayer/black/109/img/generic/apple-touch-icon.png" />
+    <link rel="icon" href="http://static.bbc.co.uk/mobile/iplayer/black/109/img/generic/favicon.ico"/>
+    <!-- Minified Javascript -->
+    <script src="http://static.bbc.co.uk/mobile/iplayer/black/109/js/json.min.js" type="text/javascript"></script>
+    <script src="http://static.bbc.co.uk/mobile/iplayer/black/109/js/glue.min.js" type="text/javascript"></script>
+    <!-- Minified CSS -->
+    <link rel="stylesheet" href="http://static.bbc.co.uk/mobile/iplayer/black/109/css/master.min.css" type="text/css" />
+    <!-- Device CSS -->
+    <link rel="stylesheet" href="http://static.bbc.co.uk/mobile/iplayer/black/109/css/320x480_163dpi/delta.css" type="text/css" />
+  </head>
+  <body class="portrait">
+    <h1>BBC iPlayer - Afternoon Play</h1>
+    <noscript>
+      <div id="error-dialog" class="component-error">
+        <h3>JavaScript appears to be disabled.</h3>
+        <p>Please check that JavaScript is enabled in your web browser.</p>
+        <div class="component-error-buttons">
+          <a href="#" onclick="$$.ui.back(); return false;">Go back</a>
+        </div>
+      </div>
+    </noscript>
+    <div id="banner">
+      <a name="banner"></a>
+      <a href="/mobile/iplayer"><img src="http://static.bbc.co.uk/mobile/iplayer/black/109/img/320x480_163dpi/logos/bbc_iplayer.png" alt="BBC iPlayer Logo" height="28" width="163"/></a>
+    </div>
+    <div id="navigation">
+      <ul>
+        <li class="first-nav"><a href="/mobile/iplayer">TV</a></li>
+        <li><a href="/mobile/iplayer/radio" class="selected">Radio</a></li>
+        <li><a href="/mobile/iplayer/favourites">Favourites</a></li>
+      </ul>
+    </div>
+    <div id="component-player" class="component isolated">
+      <div class="left-light">
+        <div id="programme">
+          <!-- Properties -->
+          <h2>Afternoon Play</h2>
+          <p>
+          Depth Charge</p>
+          <!-- Guidance Pass -->
+          <!-- Guidance Prompt -->
+          <div id="player-wrapper" style="display:block">
+            <!-- Player -->
+            <!-- Appleifamily Media Player -->
+            <div id="mediaplayer">
+              <img src="http://node1.bbcimg.co.uk/iplayer/images/episode/b00t4vjz_314_176.jpg" alt="Afternoon Play" height="178" width="318"/>
+              <a href="#" class="clicktoplay" id="clicktoplay">
+                <img src="http://static.bbc.co.uk/mobile/iplayer/black/109/img/320x480_163dpi/ui/clicktoplay_button.png" alt="Click to Play" height="59" width="183"/>
+              </a>
+            </div>
+            <!-- This code and data form part of the BBC iPlayer content protection system. Tampering with, removal of, misuse of or unauthorised use of this code constitutes circumvention of the BBC's content protection measures and may result in legal action. -->
+            <embed src="" href="http://download.iplayer.bbc.co.uk/iplayer_streaming_http_mp4/httpdl_iphone/direct/radio4/secure_auth//RBN2_radio_4_fm_-_friday_1415_b00t4twn_2010_07_30_14_24_19.mp3?token=iVXXxZp7S9gva1BoBioETKQK8XmkCP755cf4clstnQ7hVzLo4ucl9aq6oL1P8gzhOd00HPOhSEr6%0A9s2V%2FBc%2F5oZ9Q2l0cFWhpMov3b4%3D%0A" target="myself" width="0" height="0" controller="false" autoplay="false" scale="1" cache="true" type="video/quicktime" id="embedded-media-player" name="embedded-media-player" />
+            <script type="text/javascript">
+              $$.init(function(){  $$.mediaplayer.pid = 'b00t4vjz'; $$.mediaplayer.vid = 'b00t4twn'; $$.mediaplayer.mediaType = 'audio';   $$.mediaplayer.appleifamily.init(); }); </script>
+          </div>
+          <div id="prog-links-wrapper">
+            <!-- Favourites -->
+            <p class="favourites-button">
+            <a href="/mobile/iplayer/favourites/add/b006qrzz" onclick="$$.favourites.add('b006qrzz', 'brand_id'); return false;" class="favourites-add">Add to favourites</a>
+            </p>
+            <div id="player-download" style="display:block">
+              <!-- Download -->
+            </div>
+            <!-- Duration -->
+            <p id="duration">45 minutes</p>
+            <!-- Expires in -->
+            <p id="expires">Expires in 5 days</p>
+          </div>
+          <div id="service">
+            <!-- Service brand -->
+            <p>
+            <a href="/mobile/iplayer/schedule/bbc_radio_four/2010-07-31">
+              <img src="http://static.bbc.co.uk/mobile/iplayer/black/109/img/320x480_163dpi/logos/bbc_radio_four.png" alt="BBC Radio 4 Logo" height="53" width="93"/>
+            </a>
+            </p>
+          </div>
+          <!-- Programme Info -->
+          <div id="programmeinfo">
+            <p>Submarines, debt and deception in Fiona Mackie's play starring David Calder.</p>
+            <p>Available until 3:02pm 6th August 2010</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="component-recommendations" class="component">
+      <div class="left-light">
+        <h2>Recommendations</h2>
+        <!-- Orientable programme list -->
+        <div class="programme-list-orientable">
+          <ul class="programme-list one">
+            <li>
+            <a href="/mobile/iplayer/episode/b00t4qk8">
+              <img src="http://node1.bbcimg.co.uk/iplayer/images/episode/b00t4qk8_112_63.jpg" alt="Afternoon Play" height="63" width="112"/></a>
+            <div class="detail">
+              <h3 class="truncate">
+                <a href="/mobile/iplayer/episode/b00t4qk8">
+                  Afternoon Play </a>
+              </h3>
+              <p class="truncate">
+              Terremoto </p>
+              <p class="favourites-button">
+              <a href="/mobile/iplayer/favourites/add/b006qrzz" onclick="$$.favourites.add('b006qrzz', 'brand_id'); return false;" class="favourites-add">Add to favourites</a>
+              </p>
+            </div>
+            </li>
+            <li>
+            <a href="/mobile/iplayer/episode/b00t3z6f">
+              <img src="http://node1.bbcimg.co.uk/iplayer/images/episode/b00t3z6f_112_63.jpg" alt="Afternoon Play" height="63" width="112"/></a>
+            <div class="detail">
+              <h3 class="truncate">
+                <a href="/mobile/iplayer/episode/b00t3z6f">
+                  Afternoon Play </a>
+              </h3>
+              <p class="truncate">
+              Humanly Possible </p>
+              <p class="favourites-button">
+              <a href="/mobile/iplayer/favourites/add/b006qrzz" onclick="$$.favourites.add('b006qrzz', 'brand_id'); return false;" class="favourites-add">Add to favourites</a>
+              </p>
+            </div>
+            </li>
+          </ul>
+          <ul class="programme-list two">
+            <li>
+            <a href="/mobile/iplayer/episode/b00t3vl8">
+              <img src="http://node1.bbcimg.co.uk/iplayer/images/episode/b00t3vl8_112_63.jpg" alt="Afternoon Play" height="63" width="112"/></a>
+            <div class="detail">
+              <h3 class="truncate">
+                <a href="/mobile/iplayer/episode/b00t3vl8">
+                  Afternoon Play </a>
+              </h3>
+              <p class="truncate">
+              A Bridge to the Stars </p>
+              <p class="favourites-button">
+              <a href="/mobile/iplayer/favourites/add/b006qrzz" onclick="$$.favourites.add('b006qrzz', 'brand_id'); return false;" class="favourites-add">Add to favourites</a>
+              </p>
+            </div>
+            </li>
+            <li>
+            <a href="/mobile/iplayer/episode/b00rtgrj">
+              <img src="http://node1.bbcimg.co.uk/iplayer/images/episode/b00rtgrj_112_63.jpg" alt="Afternoon Play" height="63" width="112"/></a>
+            <div class="detail">
+              <h3 class="truncate">
+                <a href="/mobile/iplayer/episode/b00rtgrj">
+                  Afternoon Play </a>
+              </h3>
+              <p class="truncate">
+              A Small Piece of Silence </p>
+              <p class="favourites-button">
+              <a href="/mobile/iplayer/favourites/add/b006qrzz" onclick="$$.favourites.add('b006qrzz', 'brand_id'); return false;" class="favourites-add">Add to favourites</a>
+              </p>
+            </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="top-anchor">
+      <a href="#banner">Top</a>
+    </div>
+    <div id="bbc-mobile">
+      <a href="http://www.bbc.co.uk/mobile/">BBC Mobile</a>
+    </div>
+    <div id="footer">
+      <ul>
+        <li><a href="/mobile/iplayer/help">Help</a></li>
+        <li><a href="/mobile/iplayer/guidance/setup">Parental Guidance</a></li>
+      </ul>
+      <ul>
+        <li><a href="/mobile/iplayer/terms">Terms of Use</a></li>
+        <li><a href="/mobile/iplayer/privacy">Privacy Policy</a></li>
+      </ul>
+      <p id="copy">BBC &copy; MMX </p>
+    </div>
+    <div id="statistics-bugs">
+      <img src="" width="1" height="1" id="webbug-livestats" alt="" />
+      <img src="http://www.bbc.co.uk/mobile/webbugproxy/index.shtml?h=(www.bbc.co.uk)&u=(/mobile/iplayer/black/episode/b00t4vjz)&q=()&r=()&i=(80.175.88.51)&e=(0)&x=(mobile-xhtml)&z=(20100801232127)&extras=(pi=b00t4vjz&amp;me=audio&amp;mix=4&amp;cgr=1&amp;eid=0&amp;wv=3.1.6-109)" width="1" height="1" alt="" id="webbug" />
+    </div>
+    <script type="text/javascript">
+      $$.init(function(){  var statisticsBug = $$.dom.id('statistics-bugs'); statisticsBug.style.display = 'none'; }); </script>
+    <form method="post" name="favs-form" id="favs-form" action="">
+      <input type="hidden" name="favs-form-event" id="favs-form-event" value="" />
+      <input type="hidden" name="favs-form-pid" id="favs-form-pid" value="" />
+      <input type="hidden" name="favs-form-type" id="favs-form-type" value="" />
+    </form>
+    <script type="text/javascript">
+      $$.init(function(){   $$.endpoint = 'http://www.bbc.co.uk/mobile/iplayer';  $$.cookies.domains = '.bbc.co.uk'; $$.cookies.path = '/mobile';  $$.versions = '3.1.6'; $$.build = '109';  $$.policy.brand = 'Apple'; $$.policy.model = 'iPhone';      $$.fuse.endpoint = 'http://www.bbc.co.uk/mobile/ip/useractivity/live';     $$.favourites.init('[]');        $$.preloader.load('http://static.bbc.co.uk/mobile/iplayer/black/109/img/360x640_226dpi/ui/favourites_solid.png');  $$.preloader.load('http://static.bbc.co.uk/mobile/iplayer/black/109/img/360x640_226dpi/ui/categories_arrow_down.png');  $$.statistics.livestats.endpoint = 'http://stats.bbc.co.uk/o.gif?';  $$.authtoken = 'xh85QtQGcVsy2N3frgPJ30VkYbzfLz6rJAYRhRZPPO0hsmAqi8SORoZ%2Fz60PwncLB%2Bwozg4q9TzB7Y%2By09JbPIoraSn%2BBanlVwVIxOFkUUjTbgD2P3OaVgKE6E6BRO6eynnPv3JK3XUgZc1tDQ8urMAc86Mncv08j9wZIy%2FtFHc%3D';   $$.mediaplayer.flash.hosts = 'http://www.bbc.co.uk';     $$.orientation.register('view-adaption', null);     $$.ui.hideAddressBar();  }); </script>
+  </body>
+</html>
