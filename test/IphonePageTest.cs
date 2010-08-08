@@ -3,11 +3,10 @@ using System.IO;
 using EMP;
 
 public class IphonePageTest {
-  public string ReadFile(string name) {
-    return (new StreamReader(
-             new FileStream("test/data/episode/" + name + ".html",
-                            FileMode.Open,
-                            FileAccess.Read))).ReadToEnd();
+  public FileStream ReadFile(string name) {
+    return new FileStream("test/data/episode/" + name + ".html",
+                          FileMode.Open,
+                          FileAccess.Read);
   }
 }
 
@@ -21,7 +20,7 @@ public class IphonePageTest {
   private IphonePage page;
 
   [SetUp] public void SetUp() {
-    page = new IphonePage(ReadFile("b00td8g6"));
+    this.page = new IphonePage(ReadFile("b00td8g6"));
   }
   [Test] public void ShouldExtractTitle() {
     Assert.AreEqual("BBC Proms: 2010,  Sondheim's 80th Birthday Celebration", page.Title);
@@ -40,7 +39,7 @@ public class IphonePageTest {
   private IphonePage page;
 
   [SetUp] public void SetUp() {
-    page = new IphonePage(ReadFile("b00t4vjz"));
+    this.page = new IphonePage(ReadFile("b00t4vjz"));
   }
   [Test] public void ShouldExtractTitle() {
     Assert.AreEqual("Afternoon Play: Depth Charge", page.Title);

@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace EMP {
   public class IphonePage {
@@ -15,7 +16,15 @@ namespace EMP {
     }
 
     public IphonePage(string source) {
-      HtmlDocument h = new HtmlDocument();
+      Init(source);
+    }
+
+    public IphonePage(Stream source) {
+      Init((new StreamReader(source)).ReadToEnd());
+    }
+
+    private void Init(string source) {
+      var h = new HtmlDocument();
       h.LoadHtml(source);
       this.document = h.DocumentNode;
     }

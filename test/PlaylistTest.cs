@@ -4,11 +4,10 @@ using System.Linq;
 using EMP;
 
 public class PlaylistTest {
-  public string ReadFile(string name) {
-    return (new StreamReader(
-             new FileStream("test/data/playlist/" + name + ".xml",
-                            FileMode.Open,
-                            FileAccess.Read))).ReadToEnd();
+  public FileStream ReadFile(string name) {
+    return new FileStream("test/data/playlist/" + name + ".xml",
+                          FileMode.Open,
+                          FileAccess.Read);
   }
 }
 
@@ -22,7 +21,7 @@ public class PlaylistTest {
   private Playlist playlist;
 
   [SetUp] public void SetUp() {
-    playlist = new Playlist(ReadFile("b00t4vjz"));
+    this.playlist = new Playlist(ReadFile("b00t4vjz"));
   }
 
   [Test] public void ShouldHaveTitle() {
@@ -50,12 +49,11 @@ public class PlaylistTest {
   }
 }
 
-
 [TestFixture] public class TVPlaylistTest : PlaylistTest {
   private Playlist playlist;
 
   [SetUp] public void SetUp() {
-    playlist = new Playlist(ReadFile("b00td8g6"));
+    this.playlist = new Playlist(ReadFile("b00td8g6"));
   }
 
   [Test] public void ShouldHaveTitle() {

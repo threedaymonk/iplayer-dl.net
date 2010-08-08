@@ -2,6 +2,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.IO;
 
 namespace EMP {
   public class PlaylistItem {
@@ -21,12 +22,20 @@ namespace EMP {
     }
 
     public Playlist(string source) {
+      Init(source);
+    }
+
+    public Playlist(Stream source) {
+      Init((new StreamReader(source)).ReadToEnd());
+    }
+
+    private void Init(string source) {
       this.document = XElement.Parse(source);
     }
 
     public IEnumerable<PlaylistItem> Items {
       get {
-        return from item in this.document.Descendants(Playlist.playlistNS + "item")
+        return from item in document.Descendants(Playlist.playlistNS + "item")
                let kind = (string)item.Attribute("kind")
                where kind == "radioProgramme" || kind == "programme"
                select new PlaylistItem {
@@ -40,7 +49,7 @@ namespace EMP {
 
     public string Title {
       get {
-        return (string)this.document.Element(Playlist.playlistNS + "title");
+        return (string)document.Element(Playlist.playlistNS + "title");
       }
     }
   }
