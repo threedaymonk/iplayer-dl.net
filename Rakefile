@@ -24,3 +24,5 @@ end
 file "iplayer-dl.exe" => SOURCES do |t|
   gmcs "-out:#{t.name}", *t.prerequisites
 end
+
+task :default => "iplayer-dl.exe"
