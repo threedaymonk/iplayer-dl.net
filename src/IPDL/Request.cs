@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace EMP {
+namespace IPDL {
   class AbstractRequest {
     private string userAgent;
     private string url;

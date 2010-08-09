@@ -1,7 +1,7 @@
 using System.Net;
 using System.IO;
 
-namespace EMP {
+namespace IPDL {
   class Downloader {
     private static int BufferSize = 100000;
 

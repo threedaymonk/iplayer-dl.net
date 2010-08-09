@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using System.IO;
-using EMP;
+using IPDL;
 
 public class IphonePageTest {
   public FileStream ReadFile(string name) {

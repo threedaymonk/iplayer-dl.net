@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace EMP {
+namespace IPDL {
   public class IphonePage {
     private static string urlPrefix = "http://www.bbc.co.uk/mobile/iplayer/episode/";
     private HtmlNode document;

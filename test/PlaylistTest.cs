@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.IO;
 using System.Linq;
-using EMP;
+using IPDL;
 
 public class PlaylistTest {
   public FileStream ReadFile(string name) {

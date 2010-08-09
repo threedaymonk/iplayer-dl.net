@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace EMP {
+namespace IPDL {
   public class PlaylistItem {
     public string Kind;
     public string Identifier;
