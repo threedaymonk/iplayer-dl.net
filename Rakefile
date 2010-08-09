@@ -20,3 +20,7 @@ task :test => "test.dll" do
   system "nunit-console", "test.dll"
   rm_rf '%temp%'
 end
+
+file "iplayer-dl.exe" => SOURCES do |t|
+  gmcs "-out:#{t.name}", *t.prerequisites
+end
