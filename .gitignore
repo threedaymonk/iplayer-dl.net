@@ -2,5 +2,6 @@
 *.mp3
 *.mp4
 *.exe
+*.partial
 /TestResult.xml
 /lib
