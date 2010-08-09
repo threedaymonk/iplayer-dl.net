@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 
 namespace IPDL {
-  public class IphonePage {
+  class IphonePage {
     private static string urlPrefix = "http://www.bbc.co.uk/mobile/iplayer/episode/";
     private HtmlNode document;
 
