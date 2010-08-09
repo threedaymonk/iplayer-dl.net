@@ -2,7 +2,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 
 namespace IPDL {
-  class AbstractRequest {
+  abstract class AbstractRequest {
     private string userAgent;
     private string url;
     private CookieContainer cookies;
