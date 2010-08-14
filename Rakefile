@@ -4,7 +4,7 @@ ASSEMBLIES = %w[System.Xml.Linq System.Core HtmlAgilityPack]
 LINKED     = %w[lib/HtmlAgilityPack.dll]
 
 def gmcs(*items)
-  system *(
+  sh *(
     ["gmcs", "-lib:lib"] +
     ASSEMBLIES.map{ |a| "-r:#{a}.dll" } +
     items
