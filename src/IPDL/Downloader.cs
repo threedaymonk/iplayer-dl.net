@@ -1,19 +1,38 @@
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace IPDL {
   class Downloader {
+    public enum Status { Complete, Incomplete, AlreadyExists };
+
     private static int BufferSize = 100000;
 
     private CookieContainer cookies;
     private string pid;
 
-    public delegate void ProgressDelegate(IphonePage page, int i, int total);
-    public delegate void CompletionDelegate(IphonePage page, string filename, bool didComplete);
+    public delegate void BeginDelegate(string filename);
+    public delegate void ProgressDelegate(string filename, int bytesFetched, int bytesTotal);
+    public delegate void CompletionDelegate(string filename, Status status);
 
     public Downloader(string pid) {
       this.pid     = pid;
       this.cookies = new CookieContainer();
+    }
+
+    private Playlist GetPlaylist() {
+      var response = ((HttpWebRequest)WebRequest.Create(Playlist.Url(pid))).GetResponse();
+      var playlist = new Playlist(response.GetResponseStream());
+      response.Close();
+      return playlist;
+    }
+
+    private string GetTitle() {
+      try {
+        return GetPlaylist().Title;
+      } catch {
+        return pid;
+      }
     }
 
     private IphonePage GetIphonePage() {
@@ -23,15 +42,31 @@ namespace IPDL {
       return page;
     }
 
-    public void Download(ProgressDelegate progress, CompletionDelegate completion) {
-      var page          = GetIphonePage();
+    private string FilenameSafe(string text) {
+      var result = text;
+      foreach (var c in Path.GetInvalidFileNameChars()) {
+        result = result.Replace(c.ToString(), "");
+      }
+      return result;
+    }
 
+    public void Download(BeginDelegate begin, ProgressDelegate progress, CompletionDelegate completion) {
+      var page          = GetIphonePage();
+      var title         = GetTitle();
       var request       = new CoreMediaRequest(page.EmbeddedMediaUrl, cookies);
       var contentLength = request.ContentLength;
-      var filename      = pid + ".partial";
+      var finalPath     = FilenameSafe(title) + page.FileExtension;
+      var tempPath      = finalPath + ".partial";
 
+      begin(finalPath);
 
-      Stream localStream = new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.Read);
+      if (File.Exists(finalPath)){
+        progress(finalPath, 1, 1);
+        completion(finalPath, Status.AlreadyExists);
+        return;
+      }
+
+      Stream localStream = new FileStream(tempPath, FileMode.Append, FileAccess.Write, FileShare.Read);
 
       byte[] buffer = new byte[Downloader.BufferSize];
       int bytesRead;
@@ -44,13 +79,18 @@ namespace IPDL {
         bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
         localStream.Write(buffer, 0, bytesRead);
         totalReceived += bytesRead;
-        progress(page, totalReceived, contentLength);
+        progress(finalPath, totalReceived, contentLength);
       } while (bytesRead > 0);
 
       response.Close();
       localStream.Close();
 
-      completion(page, filename, totalReceived >= contentLength);
+      if (totalReceived >= contentLength) {
+        File.Move(tempPath, finalPath);
+        completion(finalPath, Status.Complete);
+      } else {
+        completion(finalPath, Status.Incomplete);
+      }
     }
   }
 }

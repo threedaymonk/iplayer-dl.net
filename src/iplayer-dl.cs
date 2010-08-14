@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using IPDL;
-using System.Text.RegularExpressions;
 
 public class App {
   public static void Main(string[] args) {
@@ -10,33 +9,45 @@ public class App {
     }
   }
 
+  private static string FormatBytes(int b) {
+    string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
+    double scaled = (double)b;
+    int i;
+    for (i = 0; i < suffixes.Length; i++) {
+      scaled = b / Math.Pow(1000.0, i);
+      if (scaled < 1000) break;
+    }
+    return String.Format("{0:0.00} {1}", scaled, suffixes[i]);
+  }
+
+  private static void Begun(string filename) {
+    Console.WriteLine("Downloading: {0}", filename);
+  }
+
+  private static void Progress(string filename, int bytesDownloaded, int total) {
+    Console.CursorLeft = 0;
+    Console.Write("{1:0.0}% complete; {0} left",
+                  FormatBytes((total - bytesDownloaded)),
+                  (bytesDownloaded * 100.0) / total);
+  }
+
+  private static void Finished(string filename, Downloader.Status status) {
+    Console.WriteLine();
+    switch (status) {
+      case Downloader.Status.Complete:
+        Console.WriteLine("Downloaded {0}", filename);
+        break;
+      case Downloader.Status.Incomplete:
+        Console.WriteLine("Incomplete download");
+        break;
+      case Downloader.Status.AlreadyExists:
+        Console.WriteLine("File exists");
+        break;
+    }
+  }
+
   private static void Download(string pid) {
     var downloader = new Downloader(pid);
-
-    Downloader.ProgressDelegate progress = delegate(IphonePage page, int i, int total) {
-      Console.CursorLeft = 0;
-      Console.Write("{0}/{1} ({2}%)", i, total, Math.Ceiling((i * 100.0) / total));
-    };
-
-    Downloader.CompletionDelegate completion = delegate(IphonePage page, string tempFilename, bool didComplete) {
-      Console.WriteLine();
-      if (didComplete) {
-        string filename = Regex.Replace(page.Title, @"[^a-zA-Z0-9]+", "-");
-        switch (page.Kind) {
-          case "tv":
-            filename += ".mp4";
-            break;
-          case "radio":
-            filename += ".mp3";
-            break;
-        }
-        File.Move(tempFilename, filename);
-        Console.WriteLine("Downloaded {0}", filename);
-      } else {
-        Console.WriteLine("Incomplete download");
-      }
-    };
-
-    downloader.Download(progress, completion);
+    downloader.Download(Begun, Progress, Completed);
   }
 }

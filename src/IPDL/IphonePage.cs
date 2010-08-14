@@ -50,15 +50,15 @@ namespace IPDL {
       }
     }
 
-    public string Kind {
+    public string FileExtension {
       get {
         var url = EmbeddedMediaUrl;
         if      (Regex.IsMatch(url, @"\.mp3"))
-          return "radio";
+          return ".mp3";
         else if (Regex.IsMatch(url, @"\.mp4"))
-          return "tv";
+          return ".mp4";
         else
-          return null;
+          return "";
       }
     }
   }
