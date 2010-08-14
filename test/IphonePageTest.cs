@@ -33,6 +33,10 @@ public class IphonePageTest {
   [Test] public void ShouldBeMP4() {
     Assert.AreEqual(".mp4", page.FileExtension);
   }
+
+  [Test] public void ShouldBeAvailable() {
+    Assert.IsTrue(page.IsAvailable);
+  }
 }
 
 [TestFixture] public class RadioPageTest : IphonePageTest {
@@ -51,5 +55,21 @@ public class IphonePageTest {
 
   [Test] public void ShouldBeMP3() {
     Assert.AreEqual(".mp3", page.FileExtension);
+  }
+
+  [Test] public void ShouldBeAvailable() {
+    Assert.IsTrue(page.IsAvailable);
+  }
+}
+
+[TestFixture] public class ExpiredPageTest : IphonePageTest {
+  private IphonePage page;
+
+  [SetUp] public void SetUp() {
+    this.page = new IphonePage(ReadFile("expired"));
+  }
+
+  [Test] public void ShouldNotBeAvailable() {
+    Assert.IsFalse(page.IsAvailable);
   }
 }

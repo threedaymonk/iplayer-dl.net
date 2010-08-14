@@ -50,6 +50,10 @@ namespace IPDL {
       }
     }
 
+    public bool IsAvailable {
+      get { return (EmbeddedMediaUrl != null); }
+    }
+
     public string FileExtension {
       get {
         var url = EmbeddedMediaUrl;
