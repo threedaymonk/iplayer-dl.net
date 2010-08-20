@@ -22,9 +22,6 @@ public class IphonePageTest {
   [SetUp] public void SetUp() {
     this.page = new IphonePage(ReadFile("b00td8g6"));
   }
-  [Test] public void ShouldExtractTitle() {
-    Assert.AreEqual("BBC Proms: 2010,  Sondheim's 80th Birthday Celebration", page.Title);
-  }
 
   [Test] public void ShouldExtractEmbeddedMediaUrl() {
     Assert.AreEqual("http://download.iplayer.bbc.co.uk/iplayer_streaming_http_mp4/5500147145443163744.mp4?token=iVXXxZp7S9ghZFBoBk1zMqZkty%2FxVaSS5auvKTc39ly9Uya9t4k%3D%0A", page.EmbeddedMediaUrl);
@@ -44,9 +41,6 @@ public class IphonePageTest {
 
   [SetUp] public void SetUp() {
     this.page = new IphonePage(ReadFile("b00t4vjz"));
-  }
-  [Test] public void ShouldExtractTitle() {
-    Assert.AreEqual("Afternoon Play: Depth Charge", page.Title);
   }
 
   [Test] public void ShouldExtractEmbeddedMediaUrl() {

@@ -29,17 +29,6 @@ namespace IPDL {
       this.document = h.DocumentNode;
     }
 
-    public string Title {
-      get {
-        var query = from programme in document.SelectNodes("//*[@id='programme']")
-                    let h2 = programme.SelectSingleNode("h2")
-                    let p  = programme.SelectSingleNode("p")
-                    where h2 != null && p != null
-                    select h2.InnerText.Trim() + ": " + p.InnerText.Trim();
-        return query.SingleOrDefault();
-      }
-    }
-
     public string EmbeddedMediaUrl {
       get {
         var node = document.SelectSingleNode("//embed[@href]");
