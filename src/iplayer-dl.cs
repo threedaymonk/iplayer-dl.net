@@ -9,7 +9,12 @@ public class App {
     }
   }
 
-  private void Download(string pid) {
+  private void Download(string identifier) {
+    var pid = Util.ExtractPid(identifier);
+    if (pid == null) {
+      Console.WriteLine("ERROR: {0} is not recognised as a programme ID", identifier);
+      return;
+    }
     var downloader = new Downloader(pid);
     downloader.Download(DownloadStart, DownloadProgress, DownloadEnd);
   }
