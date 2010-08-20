@@ -1,7 +1,7 @@
 TESTS   = Dir["test/**/*.cs"]
 SOURCES = Dir["src/**/*.cs"]
-ASSEMBLIES = %w[System.Xml.Linq System.Core HtmlAgilityPack]
-LINKED     = %w[lib/HtmlAgilityPack.dll]
+ASSEMBLIES = %w[System.Xml.Linq System.Core]
+LINKED     = %w[]
 
 def gmcs(*items)
   sh *(
@@ -30,7 +30,11 @@ file "build/iplayer-dl.exe" => SOURCES do |t|
 end
 
 file "release/iplayer-dl.exe" => ["build/iplayer-dl.exe", :mono_path] do |t|
-  sh "monomerge.exe -out #{t.name} build/iplayer-dl.exe #{LINKED * " "}"
+  if LINKED.any?
+    sh "monomerge.exe -out #{t.name} build/iplayer-dl.exe #{LINKED * " "}"
+  else
+    sh "cp build/iplayer-dl.exe #{t.name}"
+  end
 end
 
 desc "Build executable"

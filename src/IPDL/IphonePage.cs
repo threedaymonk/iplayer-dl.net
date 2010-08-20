@@ -1,15 +1,10 @@
-using HtmlAgilityPack;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IO;
 
 namespace IPDL {
   class IphonePage {
     private static string urlPrefix = "http://www.bbc.co.uk/mobile/iplayer/episode/";
-    private HtmlNode document;
+    private string document;
 
     public static string Url(string pid) {
       return IphonePage.urlPrefix + pid;
@@ -24,18 +19,20 @@ namespace IPDL {
     }
 
     private void Init(string source) {
-      var h = new HtmlDocument();
-      h.LoadHtml(source);
-      this.document = h.DocumentNode;
+      this.document = source;
     }
 
     public string EmbeddedMediaUrl {
       get {
-        var node = document.SelectSingleNode("//embed[@href]");
-        if (node == null)
-          return null;
+        var regex = new Regex(@"<embed\s[^>]*href=['""]?([^'""\s]+)",
+                              RegexOptions.IgnoreCase |
+                              RegexOptions.Singleline |
+                              RegexOptions.CultureInvariant);
+        var match = regex.Match(document);
+        if (match.Success)
+          return match.Groups[1].Value;
         else
-          return node.Attributes["href"].Value;
+          return null;
       }
     }
 
