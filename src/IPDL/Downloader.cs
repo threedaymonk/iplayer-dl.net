@@ -6,14 +6,14 @@ namespace IPDL {
   class Downloader {
     public enum Status { Complete, Incomplete, AlreadyExists, Unavailable, Error };
 
+    public delegate void AtStartHandler(string filename);
+    public delegate void ProgressHandler(int bytesFetched, int bytesTotal);
+    public delegate void AtEndHandler(Status status, string message);
+
     private static int BufferSize = 100000;
 
     private CookieContainer cookies;
     private string pid;
-
-    public delegate void AtStartHandler(string filename);
-    public delegate void ProgressHandler(int bytesFetched, int bytesTotal);
-    public delegate void AtEndHandler(Status status, string message);
 
     public Downloader(string pid) {
       this.pid     = pid;
