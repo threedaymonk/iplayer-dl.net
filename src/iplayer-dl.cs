@@ -14,17 +14,6 @@ public class App {
     downloader.Download(DownloadStart, DownloadProgress, DownloadEnd);
   }
 
-  private string FormatBytes(int b) {
-    string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
-    double scaled = (double)b;
-    int i;
-    for (i = 0; i < suffixes.Length; i++) {
-      scaled = b / Math.Pow(1000.0, i);
-      if (scaled < 1000) break;
-    }
-    return String.Format("{0:0.00} {1}", scaled, suffixes[i]);
-  }
-
   private void DownloadStart(string filename) {
     Console.WriteLine("Downloading: {0}", filename);
   }
@@ -32,7 +21,7 @@ public class App {
   private void DownloadProgress(int bytesDownloaded, int total) {
     Console.CursorLeft = 0;
     Console.Write("{1:0.0}% complete; {0} left",
-                  FormatBytes((total - bytesDownloaded)),
+                  Util.SIFormat(total - bytesDownloaded, "B"),
                   (bytesDownloaded * 100.0) / total);
   }
 
