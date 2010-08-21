@@ -1,8 +1,29 @@
-Usage: iplayer-dl [options] IDENTIFIER [IDENTIFIER [...]]
-Download DRM-free videos from the BBC iPlayer, courtesy of their iPhone interface.
+iplayer-dl (.Net version)
+=========================
+
+Download DRM-free videos from the BBC iPlayer by imitating an iPhone.
+
+Usage
+-----
+
+iplayer-dl [options] IDENTIFIER [IDENTIFIER [...]]
+
 IDENTIFIER is the iPlayer viewing page URL or the PID of the programme.
 
     -d, --download-path=PATH         Location into which downloaded files will be saved.
                                      Default is current working directory.
     -v, --version                    Show the software version.
     -h, --help                       Show this help message.
+
+Limitations
+-----------
+
+This program can only download video and audio that is available on the iPhone
+version of the iPlayer. This excludes:
+
+* Some imported US series
+* Local TV and radio
+* Films
+
+Paul Battley <pbattley@gmail.com> http://po-ru.com/
+Source code is available at http://github.com/threedaymonk/iplayer-dl.net

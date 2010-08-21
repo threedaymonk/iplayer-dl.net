@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("iplayer-dl")]
+[assembly: AssemblyTitle("iplayer-dl (.Net version)")]
 [assembly: AssemblyDescription("Download iPlayer programmes")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Paul Battley <pbattley@gmail.com>")]

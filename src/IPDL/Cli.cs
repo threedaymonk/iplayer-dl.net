@@ -12,6 +12,8 @@ namespace IPDL {
         {"h|help", v => ShowHelp()}
       };
       var identifiers = opts.Parse(args);
+      if (identifiers.Count == 0)
+        ShowHelp();
       foreach (var identifier in identifiers) {
         Download(identifier);
       }
