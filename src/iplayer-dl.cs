@@ -1,11 +1,15 @@
 using System;
 using System.IO;
 using IPDL;
+using Mono.Options;
 
 public class App {
   public static void Main(string[] args) {
-    foreach (var arg in args) {
-      (new App()).Download(arg);
+    var opts = new OptionSet()
+               .Add("d=|download-path=", d => Directory.SetCurrentDirectory(d));
+    var identifiers = opts.Parse(args);
+    foreach (var identifier in identifiers) {
+      (new App()).Download(identifier);
     }
   }
 
