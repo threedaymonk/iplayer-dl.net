@@ -8,8 +8,8 @@ namespace IPDL {
     public void Run(string[] args) {
       var opts = new OptionSet(){
         {"d=|download-path=", v => Directory.SetCurrentDirectory(v)},
-        {"v|version", v => ShowVersion()},
-        {"h|help", v => ShowHelp()}
+        {"v|version",         v => ShowVersion()},
+        {"h|help",            v => ShowHelp()}
       };
       var identifiers = opts.Parse(args);
       if (identifiers.Count == 0)
@@ -22,10 +22,12 @@ namespace IPDL {
     private void ShowVersion() {
       var details = Assembly.GetName();
       Console.WriteLine("{0} version {1}", details.Name, details.Version);
+      Environment.Exit(0);
     }
 
     private void ShowHelp() {
       Console.WriteLine((new StreamReader(Assembly.GetManifestResourceStream("help.txt"))).ReadToEnd());
+      Environment.Exit(0);
     }
 
     private Assembly Assembly {
