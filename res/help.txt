@@ -1,4 +1,4 @@
-iplayer-dl (.Net version)
+iplayer-dl (.NET version)
 =========================
 
 Download DRM-free videos from the BBC iPlayer by imitating an iPhone.
