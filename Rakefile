@@ -5,6 +5,14 @@ TEST_ASSEMBLIES = %w[]
 LINKED          = %w[]
 RESOURCES       = Dir["res/*"]
 
+file "build" do |t|
+  mkdir t.name
+end
+
+file "release" do |t|
+  mkdir t.name
+end
+
 def gmcs(*items)
   sh *(
     ["gmcs", "-lib:lib"] +
@@ -29,11 +37,11 @@ task :test => ["test.dll", :mono_path] do
   rm_rf '%temp%'
 end
 
-file "build/iplayer-dl.exe" => RESOURCES + SOURCES do |t|
+file "build/iplayer-dl.exe" => RESOURCES + SOURCES + ["build"] do |t|
   gmcs "-out:#{t.name}", *SOURCES
 end
 
-file "release/iplayer-dl.exe" => ["build/iplayer-dl.exe", :mono_path] do |t|
+file "release/iplayer-dl.exe" => ["build/iplayer-dl.exe", "release", :mono_path] do |t|
   if LINKED.any?
     sh "monomerge.exe -out #{t.name} build/iplayer-dl.exe #{LINKED * " "}"
   else
@@ -41,8 +49,5 @@ file "release/iplayer-dl.exe" => ["build/iplayer-dl.exe", :mono_path] do |t|
   end
 end
 
-desc "Build executable"
-task :default => "build/iplayer-dl.exe"
-
-desc "Link executable with libraries"
-task :release => "release/iplayer-dl.exe"
+desc "Build and link executable"
+task :default => "release/iplayer-dl.exe"
