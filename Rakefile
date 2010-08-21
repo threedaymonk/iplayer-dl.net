@@ -1,19 +1,23 @@
-TESTS   = Dir["test/**/*.cs"]
-SOURCES = Dir["src/**/*.cs"]
-ASSEMBLIES = %w[System.Xml.Linq System.Core]
-LINKED     = %w[]
+TESTS           = Dir["test/**/*.cs"]
+SOURCES         = Dir["src/**/*.cs"]
+ASSEMBLIES      = %w[System.Xml.Linq System.Core]
+TEST_ASSEMBLIES = %w[]
+LINKED          = %w[]
+RESOURCES       = Dir["res/*"]
 
 def gmcs(*items)
   sh *(
     ["gmcs", "-lib:lib"] +
-    ASSEMBLIES.map{ |a| "-r:#{a}.dll" } +
+    ASSEMBLIES.map{ |a| "-r:#{a}" } +
+    RESOURCES.map{ |a| "-resource:#{a}" } +
     items
   )
   raise "Compilation failed" unless $? == 0
 end
 
-file "test.dll" => TESTS + SOURCES do |t|
-  gmcs "-t:library", "-pkg:nunit", "-out:test.dll", *(SOURCES + TESTS)
+file "test.dll" => TESTS + RESOURCES + SOURCES do |t|
+  test_assemblies = TEST_ASSEMBLIES.map{ |a| "-r:#{a}" }
+  gmcs "-t:library", "-pkg:nunit", "-out:test.dll", *(test_assemblies + SOURCES + TESTS)
 end
 
 task :mono_path do
@@ -25,8 +29,8 @@ task :test => ["test.dll", :mono_path] do
   rm_rf '%temp%'
 end
 
-file "build/iplayer-dl.exe" => SOURCES do |t|
-  gmcs "-out:#{t.name}", *t.prerequisites
+file "build/iplayer-dl.exe" => RESOURCES + SOURCES do |t|
+  gmcs "-out:#{t.name}", *SOURCES
 end
 
 file "release/iplayer-dl.exe" => ["build/iplayer-dl.exe", :mono_path] do |t|

@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -9,8 +10,6 @@ namespace IPDL {
     public delegate void AtStartHandler(string filename);
     public delegate void ProgressHandler(int bytesFetched, int bytesTotal);
     public delegate void AtEndHandler(Status status, string message);
-
-    private static int BufferSize = 100000;
 
     private CookieContainer cookies;
     private string pid;
@@ -38,24 +37,20 @@ namespace IPDL {
 
       atStart(finalPath);
 
-      var request         = new CoreMediaRequest(page.EmbeddedMediaUrl, cookies);
-      var contentLength   = request.ContentLength;
-      Stream localStream  = new FileStream(tempPath, FileMode.Append, FileAccess.Write, FileShare.Read);
-      byte[] buffer       = new byte[Downloader.BufferSize];
-      int bytesRead;
-      int totalReceived   = (int)localStream.Position; // TODO use longs
-      var response        = request.GetResponseFromOffset(totalReceived);
-      Stream remoteStream = response.GetResponseStream();
+      var request       = new CoreMediaRequest(page.EmbeddedMediaUrl, cookies);
+      var contentLength = request.ContentLength;
+      int totalReceived = 0;
 
-      do {
-        bytesRead = remoteStream.Read(buffer, 0, buffer.Length);
-        localStream.Write(buffer, 0, bytesRead);
-        totalReceived += bytesRead;
-        progress(totalReceived, contentLength);
-      } while (bytesRead > 0);
-
-      response.Close();
-      localStream.Close();
+      OpenFileForWriting(tempPath, localStream => {
+        totalReceived = (int)localStream.Position;
+        request.GetResponseStreamFromOffset(totalReceived, remoteStream => {
+          ReadFromStream(remoteStream, (buffer, bytesRead) => {
+            localStream.Write(buffer, 0, bytesRead);
+            totalReceived += bytesRead;
+            progress(totalReceived, contentLength);
+          });
+        });
+      });
 
       if (totalReceived >= contentLength) {
         File.Move(tempPath, finalPath);
@@ -66,9 +61,10 @@ namespace IPDL {
     }
 
     private Playlist GetPlaylist() {
-      var response = ((HttpWebRequest)WebRequest.Create(Playlist.Url(pid))).GetResponse();
-      var playlist = new Playlist(response.GetResponseStream());
-      response.Close();
+      Playlist playlist = null;
+      (new GeneralRequest(Playlist.Url(pid))).GetResponseStream(stream => {
+        playlist = new Playlist(stream);
+      });
       return playlist;
     }
 
@@ -81,9 +77,10 @@ namespace IPDL {
     }
 
     private IphonePage GetIphonePage() {
-      var response = new IphoneRequest(IphonePage.Url(pid), cookies).GetResponse();
-      var page = new IphonePage(response.GetResponseStream());
-      response.Close();
+      IphonePage page = null;
+      new IphoneRequest(IphonePage.Url(pid), cookies).GetResponseStream(stream => {
+        page = new IphonePage(stream);
+      });
       return page;
     }
 
@@ -93,6 +90,23 @@ namespace IPDL {
         result = result.Replace(c.ToString(), "");
       }
       return result;
+    }
+
+    private static int BufferSize = 100000;
+    private void ReadFromStream(Stream stream, Action<byte[], int> handler) {
+      byte[] buffer = new byte[Downloader.BufferSize];
+      int bytesRead;
+
+      do {
+        bytesRead = stream.Read(buffer, 0, buffer.Length);
+        handler(buffer, bytesRead);
+      } while (bytesRead > 0);
+    }
+
+    private void OpenFileForWriting(string path, Action<Stream> handler) {
+      Stream stream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.Read);
+      handler(stream);
+      stream.Close();
     }
   }
 }

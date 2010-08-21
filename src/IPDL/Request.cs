@@ -1,4 +1,5 @@
 using System.Net;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace IPDL {
@@ -7,21 +8,43 @@ namespace IPDL {
     private string url;
     private CookieContainer cookies;
 
-    public AbstractRequest(
-      string url,
-      CookieContainer cookies,
-      string userAgent)
-    {
+    public delegate void ResponseHandler(WebResponse response);
+    public delegate void ResponseStreamHandler(Stream stream);
+
+    public AbstractRequest(string url, CookieContainer cookies, string userAgent) {
       this.url       = url;
       this.cookies   = cookies;
       this.userAgent = userAgent;
     }
 
     protected HttpWebRequest Request() {
-      HttpWebRequest r  = (HttpWebRequest)WebRequest.Create(url);
-      r.UserAgent       = userAgent;
-      r.CookieContainer = cookies;
+      HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
+      if (userAgent != null) r.UserAgent       = userAgent;
+      if (cookies   != null) r.CookieContainer = cookies;
       return r;
+    }
+
+    protected void WithResponse(HttpWebRequest request, ResponseHandler responseHandler) {
+      var response = request.GetResponse();
+      responseHandler(response);
+      response.Close();
+    }
+
+    protected void WithResponseStream(HttpWebRequest request, ResponseStreamHandler streamHandler) {
+      WithResponse(request, response => {
+        var stream = response.GetResponseStream();
+        streamHandler(stream);
+        stream.Close();
+      });
+    }
+  }
+
+  class GeneralRequest : AbstractRequest {
+    public GeneralRequest(string url)
+      : base(url, null, null) {}
+
+    public void GetResponseStream(ResponseStreamHandler streamHandler) {
+      WithResponseStream(Request(), streamHandler);
     }
   }
 
@@ -33,8 +56,8 @@ namespace IPDL {
     public IphoneRequest(string url, CookieContainer cookies)
       : base(url, cookies, IphoneRequest.UserAgent) {}
 
-    public WebResponse GetResponse() {
-      return Request().GetResponse();
+    public void GetResponseStream(ResponseStreamHandler streamHandler) {
+      WithResponseStream(Request(), streamHandler);
     }
   }
 
@@ -59,16 +82,16 @@ namespace IPDL {
         return;
       var request = Request();
       request.AddRange(0, 1);
-      var response = request.GetResponse();
-      this.contentLength = int.Parse(Regex.Match(response.Headers["Content-Range"], @"\d+$").Value);
-      response.Close();
+      WithResponse(request, response => {
+        this.contentLength = int.Parse(Regex.Match(response.Headers["Content-Range"], @"\d+$").Value);
+      });
     }
 
-    public WebResponse GetResponseFromOffset(int offset) {
+    public void GetResponseStreamFromOffset(int offset, ResponseStreamHandler streamHandler) {
       var contentLength = ContentLength;
       var request = Request();
       request.AddRange(offset, contentLength);
-      return request.GetResponse();
+      WithResponseStream(request, streamHandler);
     }
   }
 }

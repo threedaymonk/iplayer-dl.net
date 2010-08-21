@@ -1,17 +1,33 @@
 using System;
 using System.IO;
 using Mono.Options;
+using System.Reflection;
 
 namespace IPDL {
   public class Cli {
     public void Run(string[] args) {
       var opts = new OptionSet(){
-        {"d=|download-path=", d => Directory.SetCurrentDirectory(d)}
+        {"d=|download-path=", v => Directory.SetCurrentDirectory(v)},
+        {"v|version", v => ShowVersion()},
+        {"h|help", v => ShowHelp()}
       };
       var identifiers = opts.Parse(args);
       foreach (var identifier in identifiers) {
         Download(identifier);
       }
+    }
+
+    private void ShowVersion() {
+      var details = Assembly.GetName();
+      Console.WriteLine("{0} version {1}", details.Name, details.Version);
+    }
+
+    private void ShowHelp() {
+      Console.WriteLine((new StreamReader(Assembly.GetManifestResourceStream("help.txt"))).ReadToEnd());
+    }
+
+    private Assembly Assembly {
+      get { return Assembly.GetExecutingAssembly(); }
     }
 
     private void Download(string identifier) {

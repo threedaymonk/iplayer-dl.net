@@ -1,0 +1,8 @@
+Usage: iplayer-dl [options] IDENTIFIER [IDENTIFIER [...]]
+Download DRM-free videos from the BBC iPlayer, courtesy of their iPhone interface.
+IDENTIFIER is the iPlayer viewing page URL or the PID of the programme.
+
+    -d, --download-path=PATH         Location into which downloaded files will be saved.
+                                     Default is current working directory.
+    -v, --version                    Show the software version.
+    -h, --help                       Show this help message.
