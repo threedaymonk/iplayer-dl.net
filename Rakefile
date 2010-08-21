@@ -51,3 +51,12 @@ end
 
 desc "Build and link executable"
 task :default => "release/iplayer-dl.exe"
+
+desc "Package"
+task :package => "release/iplayer-dl.exe" do |t|
+  exe = File.basename(t.prerequisites.first)
+  Dir.chdir File.dirname(t.prerequisites.first) do
+    version = `mono #{exe} -v`[/(\d+\.?){4}/]
+    sh "zip iplayer-dl-#{version}.zip #{exe}"
+  end
+end
