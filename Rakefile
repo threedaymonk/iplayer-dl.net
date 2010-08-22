@@ -4,6 +4,7 @@ ASSEMBLIES      = %w[System.Xml.Linq System.Core]
 TEST_ASSEMBLIES = %w[]
 LINKED          = %w[]
 RESOURCES       = Dir["res/*"]
+DEFINED         = (ENV["DEFINED"] || "").split
 
 file "build" do |t|
   mkdir t.name
@@ -16,6 +17,7 @@ end
 def gmcs(*items)
   sh *(
     ["gmcs", "-lib:lib"] +
+    DEFINED.map{ |a| "-d:#{a}" } +
     ASSEMBLIES.map{ |a| "-r:#{a}" } +
     RESOURCES.map{ |a| "-resource:#{a}" } +
     items
