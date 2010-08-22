@@ -92,7 +92,7 @@ namespace IPDL {
       return result;
     }
 
-    private static int BufferSize = 100000;
+    private static int BufferSize = 0x10000;
     private void ReadFromStream(Stream stream, Action<byte[], int> handler) {
       byte[] buffer = new byte[Downloader.BufferSize];
       int bytesRead;
