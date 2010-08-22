@@ -24,18 +24,12 @@ namespace IPDL {
       return r;
     }
 
-    protected void WithResponse(HttpWebRequest request, ResponseHandler responseHandler) {
-      var response = request.GetResponse();
-      responseHandler(response);
-      response.Close();
-    }
-
     protected void WithResponseStream(HttpWebRequest request, ResponseStreamHandler streamHandler) {
-      WithResponse(request, response => {
-        var stream = response.GetResponseStream();
-        streamHandler(stream);
-        stream.Close();
-      });
+      using (var response = request.GetResponse()) {
+        using (var stream = response.GetResponseStream()) {
+          streamHandler(stream);
+        }
+      }
     }
   }
 
@@ -82,9 +76,9 @@ namespace IPDL {
         return;
       var request = Request();
       request.AddRange(0, 1);
-      WithResponse(request, response => {
+      using (var response = request.GetResponse()) {
         this.contentLength = int.Parse(Regex.Match(response.Headers["Content-Range"], @"\d+$").Value);
-      });
+      }
     }
 
     public void GetResponseStreamFromOffset(int offset, ResponseStreamHandler streamHandler) {
