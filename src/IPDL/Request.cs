@@ -19,6 +19,7 @@ namespace IPDL {
 
     protected HttpWebRequest Request() {
       HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
+      r.Accept = "*/*";
       if (userAgent != null) r.UserAgent       = userAgent;
       if (cookies   != null) r.CookieContainer = cookies;
       return r;
