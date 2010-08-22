@@ -50,9 +50,10 @@ namespace IPDL {
 
     private void DownloadProgress(int bytesDownloaded, int total) {
       Console.CursorLeft = 0;
-      Console.Write("{1:0.0}% complete; {0} left",
+      Console.Write("{1:0.0}% complete; {0} left        ",
                     Util.SIFormat(total - bytesDownloaded, "B"),
                     (bytesDownloaded * 100.0) / total);
+      Console.CursorLeft -= 8;
     }
 
     private void DownloadEnd(Downloader.Status status, string message) {
