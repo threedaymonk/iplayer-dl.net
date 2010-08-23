@@ -74,6 +74,7 @@ namespace IPDL {
   class CoreMediaRequest : AbstractRequest {
     private static string UserAgent =
       "Apple iPhone v1.1.4 CoreMedia v1.0.0.4A102";
+    private static int MaxSegmentSize = 0x400000;
 
     private int contentLength = -1;
 
@@ -99,9 +100,12 @@ namespace IPDL {
 
     public void GetResponseStreamFromOffset(int offset, ResponseStreamHandler streamHandler) {
       var contentLength = ContentLength;
-      var request = Request();
-      request.AddRange(offset, contentLength);
-      WithResponseStream(request, streamHandler);
+      for (int firstByte = offset; firstByte < contentLength; firstByte += CoreMediaRequest.MaxSegmentSize) {
+        int lastByte = Math.Min(firstByte + CoreMediaRequest.MaxSegmentSize, contentLength) - 1;
+        var request = Request();
+        request.AddRange(firstByte, lastByte);
+        WithResponseStream(request, streamHandler);
+      }
     }
   }
 }
