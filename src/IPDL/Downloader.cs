@@ -12,22 +12,20 @@ namespace IPDL {
     public delegate void AtEndHandler(Status status, string message);
 
     private CookieContainer cookies;
-    private string pid;
 
-    public Downloader(string pid) {
-      this.pid     = pid;
+    public Downloader() {
       this.cookies = new CookieContainer();
     }
 
-    public void Download(AtStartHandler atStart, ProgressHandler progress, AtEndHandler atEnd) {
-      var page = GetIphonePage();
+    public void Download(string pid, AtStartHandler atStart, ProgressHandler progress, AtEndHandler atEnd) {
+      var page = GetIphonePage(pid);
 
       if (!page.IsAvailable) {
         atEnd(Status.Unavailable, pid);
         return;
       }
 
-      var finalPath = FilenameSafe(GetTitle()) + page.FileExtension;
+      var finalPath = FilenameSafe(GetTitle(pid)) + page.FileExtension;
       var tempPath  = finalPath + ".partial";
 
       if (File.Exists(finalPath)){
@@ -41,7 +39,7 @@ namespace IPDL {
       var contentLength = request.ContentLength;
       int totalReceived = 0;
 
-      OpenFileForWriting(tempPath, localStream => {
+      using (var localStream = new FileStream(tempPath, FileMode.Append, FileAccess.Write, FileShare.Read)) {
         totalReceived = (int)localStream.Position;
         request.GetResponseStreamFromOffset(totalReceived, remoteStream => {
           ReadFromStream(remoteStream, (buffer, bytesRead) => {
@@ -50,7 +48,7 @@ namespace IPDL {
             progress(totalReceived, contentLength);
           });
         });
-      });
+      }
 
       if (totalReceived >= contentLength) {
         File.Move(tempPath, finalPath);
@@ -60,7 +58,7 @@ namespace IPDL {
       }
     }
 
-    private Playlist GetPlaylist() {
+    private Playlist GetPlaylist(string pid) {
       Playlist playlist = null;
       (new GeneralRequest(Playlist.Url(pid))).GetResponseStream(stream => {
         playlist = new Playlist(stream);
@@ -68,15 +66,15 @@ namespace IPDL {
       return playlist;
     }
 
-    private string GetTitle() {
+    private string GetTitle(string pid) {
       try {
-        return GetPlaylist().Title;
+        return GetPlaylist(pid).Title;
       } catch {
         return pid;
       }
     }
 
-    private IphonePage GetIphonePage() {
+    private IphonePage GetIphonePage(string pid) {
       IphonePage page = null;
       new IphoneRequest(IphonePage.Url(pid), cookies).GetResponseStream(stream => {
         page = new IphonePage(stream);
@@ -101,12 +99,6 @@ namespace IPDL {
         bytesRead = stream.Read(buffer, 0, buffer.Length);
         handler(buffer, bytesRead);
       } while (bytesRead > 0);
-    }
-
-    private void OpenFileForWriting(string path, Action<Stream> handler) {
-      Stream stream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.Read);
-      handler(stream);
-      stream.Close();
     }
   }
 }

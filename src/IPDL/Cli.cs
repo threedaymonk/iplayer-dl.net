@@ -5,6 +5,12 @@ using System.Reflection;
 
 namespace IPDL {
   public class Cli {
+    private Downloader downloader;
+
+    public Cli() {
+      this.downloader = new Downloader();
+    }
+
     public void Run(string[] args) {
       var opts = new OptionSet(){
         {"d=|download-path=", v => Directory.SetCurrentDirectory(v)},
@@ -40,8 +46,7 @@ namespace IPDL {
         Console.WriteLine("ERROR: {0} is not recognised as a programme ID", identifier);
         return;
       }
-      var downloader = new Downloader(pid);
-      downloader.Download(DownloadStart, DownloadProgress, DownloadEnd);
+      downloader.Download(pid, DownloadStart, DownloadProgress, DownloadEnd);
     }
 
     private void DownloadStart(string filename) {
