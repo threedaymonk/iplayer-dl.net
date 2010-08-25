@@ -4,12 +4,14 @@ using Mono.Options;
 using System.Reflection;
 
 namespace IPDL {
-  public class Cli {
+  class Cli {
     private Downloader downloader;
 
-    public Cli() {
-      this.downloader = new Downloader();
+    public Cli(Downloader downloader) {
+      this.downloader = downloader;
     }
+
+    public Cli() : this(new Downloader()) {}
 
     public void Run(string[] args) {
       var opts = new OptionSet(){
@@ -61,19 +63,19 @@ namespace IPDL {
       Console.CursorLeft -= 8;
     }
 
-    private void DownloadEnd(Downloader.Status status, string message) {
+    private void DownloadEnd(DownloadStatus status, string message) {
       Console.WriteLine();
       switch (status) {
-        case Downloader.Status.Complete:
+        case DownloadStatus.Complete:
           Console.WriteLine("SUCCESS: Downloaded to {0}", message);
           break;
-        case Downloader.Status.Incomplete:
+        case DownloadStatus.Incomplete:
           Console.WriteLine("FAILED: Incomplete download saved as {0}", message);
           break;
-        case Downloader.Status.AlreadyExists:
+        case DownloadStatus.AlreadyExists:
           Console.WriteLine("SKIP: File exists: {0}", message);
           break;
-        case Downloader.Status.Unavailable:
+        case DownloadStatus.Unavailable:
           Console.WriteLine("ERROR: {0} is currently unavailable", message);
           break;
       }

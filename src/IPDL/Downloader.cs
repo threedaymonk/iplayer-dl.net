@@ -4,12 +4,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 namespace IPDL {
-  class Downloader {
-    public enum Status { Complete, Incomplete, AlreadyExists, Unavailable, Error };
+  enum DownloadStatus { Complete, Incomplete, AlreadyExists, Unavailable, Error };
 
+  class Downloader {
     public delegate void AtStartHandler(string filename);
     public delegate void ProgressHandler(int bytesFetched, int bytesTotal);
-    public delegate void AtEndHandler(Status status, string message);
+    public delegate void AtEndHandler(DownloadStatus status, string message);
 
     private CookieContainer cookies;
 
@@ -21,7 +21,7 @@ namespace IPDL {
       var page = GetIphonePage(pid);
 
       if (!page.IsAvailable) {
-        atEnd(Status.Unavailable, pid);
+        atEnd(DownloadStatus.Unavailable, pid);
         return;
       }
 
@@ -29,7 +29,7 @@ namespace IPDL {
       var tempPath  = finalPath + ".partial";
 
       if (File.Exists(finalPath)){
-        atEnd(Status.AlreadyExists, finalPath);
+        atEnd(DownloadStatus.AlreadyExists, finalPath);
         return;
       }
 
@@ -52,9 +52,9 @@ namespace IPDL {
 
       if (totalReceived >= contentLength) {
         File.Move(tempPath, finalPath);
-        atEnd(Status.Complete, finalPath);
+        atEnd(DownloadStatus.Complete, finalPath);
       } else {
-        atEnd(Status.Incomplete, tempPath);
+        atEnd(DownloadStatus.Incomplete, tempPath);
       }
     }
 
