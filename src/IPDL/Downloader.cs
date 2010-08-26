@@ -4,9 +4,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 namespace IPDL {
-  enum DownloadStatus { Complete, Incomplete, AlreadyExists, Unavailable, Error };
+  public enum DownloadStatus { Complete, Incomplete, AlreadyExists, Unavailable, Error };
 
-  class Downloader {
+  public class Downloader {
     public delegate void AtStartHandler(string filename);
     public delegate void ProgressHandler(int bytesFetched, int bytesTotal);
     public delegate void AtEndHandler(DownloadStatus status, string message);

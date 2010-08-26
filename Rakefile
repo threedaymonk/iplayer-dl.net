@@ -1,7 +1,7 @@
 TESTS           = Dir["test/**/*.cs"]
 SOURCES         = Dir["src/**/*.cs"]
 ASSEMBLIES      = %w[System.Xml.Linq System.Core]
-TEST_ASSEMBLIES = %w[]
+TEST_ASSEMBLIES = %w[FakeItEasy]
 LINKED          = %w[]
 RESOURCES       = Dir["res/*"]
 DEFINED         = (ENV["DEFINED"] || "").split
