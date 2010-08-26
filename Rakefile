@@ -36,7 +36,6 @@ end
 
 task :test => ["test.dll", :mono_path] do
   system "nunit-console", "test.dll"
-  rm_rf '%temp%'
 end
 
 file "build/iplayer-dl.exe" => RESOURCES + SOURCES + ["build"] do |t|
