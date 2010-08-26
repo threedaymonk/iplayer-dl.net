@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 
 namespace IPDL {
-  class Util {
+  static class Util {
     private static string[] SISuffixes = { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
 
     public static string SIFormat(int number, string units) {
