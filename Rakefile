@@ -35,7 +35,7 @@ task :mono_path do
 end
 
 task :test => ["test.dll", :mono_path] do
-  system "nunit-console", "test.dll"
+  system "nunit-console", "-noshadow", "test.dll"
 end
 
 file "build/iplayer-dl.exe" => RESOURCES + SOURCES + ["build"] do |t|
