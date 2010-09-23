@@ -13,7 +13,10 @@ IDENTIFIER is the iPlayer viewing page URL or the PID of the programme.
     -d, --download-path=PATH         Location into which downloaded files will be saved.
                                      Default is current working directory.
     -v, --version                    Show the software version.
+    -q, --quiet                      Do not show any progress output.
     -h, --help                       Show this help message.
+
+The return status is 1 if any programmes could not be downloades, and 0 otherwise.
 
 Limitations
 -----------
