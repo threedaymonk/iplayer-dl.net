@@ -6,11 +6,12 @@ using System.Reflection;
 namespace IPDL {
   class Cli {
     private Downloader downloader;
-    private bool succeeded;
+    private bool succeeded, quiet;
 
     public Cli(Downloader downloader) {
-      this.downloader = downloader;
-      this.succeeded  = true;
+      this.downloader   = downloader;
+      this.succeeded    = true;
+      this.quiet        = false;
     }
 
     public Cli() : this(new Downloader()) {}
@@ -21,6 +22,7 @@ namespace IPDL {
       var opts = new OptionSet(){
         {"d=|download-path=", v => Directory.SetCurrentDirectory(v)},
         {"v|version",         v => showVersion = true},
+        {"q|quiet",           v => quiet = true},
         {"h|help",            v => showHelp = true}
       };
       var identifiers = opts.Parse(args);
@@ -57,7 +59,9 @@ namespace IPDL {
     private void Download(string identifier) {
       var pid = Util.ExtractPid(identifier);
       if (pid == null) {
-        Console.WriteLine("ERROR: {0} is not recognised as a programme ID", identifier);
+        if (!this.quiet) {
+          Console.WriteLine("ERROR: {0} is not recognised as a programme ID", identifier);
+        }
         this.succeeded = false;
         return;
       }
@@ -65,15 +69,25 @@ namespace IPDL {
     }
 
     private void DownloadStart(string filename) {
+      if (this.quiet) return;
+
       Console.WriteLine("Downloading: {0}", filename);
     }
 
+    private string lastOutput = "";
     private void DownloadProgress(int bytesDownloaded, int total) {
-      Console.CursorLeft = 0;
-      Console.Write("{1:0.0}% complete; {0} left        ",
-                    Util.SIFormat(total - bytesDownloaded, "B"),
-                    (bytesDownloaded * 100.0) / total);
-      Console.CursorLeft -= 8;
+      if (this.quiet) return;
+
+      string output = String.Format("{1:0.0}% of {0}",
+                                    Util.SIFormat(total, "B"),
+                                    (bytesDownloaded * 100.0) / total);
+      if (output != lastOutput) {
+#if !TEST_BUILD
+        Console.CursorLeft = 0;
+#endif
+        Console.Write(output);
+        lastOutput = output;
+      }
     }
 
     private void DownloadEnd(DownloadStatus status, string message) {
@@ -94,8 +108,10 @@ namespace IPDL {
           this.succeeded = false;
           break;
       }
-      Console.WriteLine();
-      Console.WriteLine(output);
+      if (!this.quiet) {
+        Console.WriteLine();
+        Console.WriteLine(output);
+      }
     }
   }
 }

@@ -15,6 +15,8 @@ class DownloaderWithFixedStatus : Downloader {
   }
 
   public override void Download(string pid, AtStartHandler atStart, ProgressHandler progress, AtEndHandler atEnd) {
+    atStart("example.mp4");
+    progress(1, 2);
     atEnd(this.status, this.message);
   }
 }
@@ -101,5 +103,12 @@ class DownloaderWithFixedStatus : Downloader {
     var cli = new Cli(downloader);
     cli.Run(new string[] {"xxx"});
     Assert.IsFalse(cli.Succeeded);
+  }
+
+  [Test] public void ShouldNotPrintToConsoleIfQuietFlagIsSet() {
+    var downloader = new DownloaderWithFixedStatus(DownloadStatus.Complete, "blah.mp4");
+    var cli = new Cli(downloader);
+    cli.Run(new string[] {"--quiet", "b0000000"});
+    Assert.AreEqual("", GetConsoleOutput());
   }
 }

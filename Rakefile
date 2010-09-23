@@ -27,7 +27,8 @@ end
 
 file "test.dll" => TESTS + RESOURCES + SOURCES do |t|
   test_assemblies = TEST_ASSEMBLIES.map{ |a| "-r:#{a}" }
-  gmcs "-t:library", "-pkg:nunit", "-out:test.dll", *(test_assemblies + SOURCES + TESTS)
+  gmcs "-t:library", "-pkg:nunit", "-out:test.dll", "-d:TEST_BUILD",
+       *(test_assemblies + SOURCES + TESTS)
 end
 
 task :mono_path do
