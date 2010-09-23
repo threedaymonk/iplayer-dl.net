@@ -6,9 +6,11 @@ using System.Reflection;
 namespace IPDL {
   class Cli {
     private Downloader downloader;
+    private bool succeeded;
 
     public Cli(Downloader downloader) {
       this.downloader = downloader;
+      this.succeeded  = true;
     }
 
     public Cli() : this(new Downloader()) {}
@@ -35,6 +37,10 @@ namespace IPDL {
       }
     }
 
+    public bool Succeeded {
+      get { return this.succeeded; }
+    }
+
     private void ShowVersion() {
       var details = Assembly.GetName();
       Console.WriteLine("{0} version {1}", details.Name, details.Version);
@@ -52,6 +58,7 @@ namespace IPDL {
       var pid = Util.ExtractPid(identifier);
       if (pid == null) {
         Console.WriteLine("ERROR: {0} is not recognised as a programme ID", identifier);
+        this.succeeded = false;
         return;
       }
       downloader.Download(pid, DownloadStart, DownloadProgress, DownloadEnd);
@@ -70,21 +77,25 @@ namespace IPDL {
     }
 
     private void DownloadEnd(DownloadStatus status, string message) {
-      Console.WriteLine();
+      string output = "";
       switch (status) {
         case DownloadStatus.Complete:
-          Console.WriteLine("SUCCESS: Downloaded to {0}", message);
+          output = String.Format("SUCCESS: Downloaded to {0}", message);
           break;
         case DownloadStatus.Incomplete:
-          Console.WriteLine("FAILED: Incomplete download saved as {0}", message);
+          output = String.Format("FAILED: Incomplete download saved as {0}", message);
+          this.succeeded = false;
           break;
         case DownloadStatus.AlreadyExists:
-          Console.WriteLine("SKIP: File exists: {0}", message);
+          output = String.Format("SKIP: File exists: {0}", message);
           break;
         case DownloadStatus.Unavailable:
-          Console.WriteLine("ERROR: {0} is currently unavailable", message);
+          output = String.Format("ERROR: {0} is currently unavailable", message);
+          this.succeeded = false;
           break;
       }
+      Console.WriteLine();
+      Console.WriteLine(output);
     }
   }
 }

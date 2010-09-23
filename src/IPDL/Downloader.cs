@@ -17,7 +17,8 @@ namespace IPDL {
       this.cookies = new CookieContainer();
     }
 
-    public void Download(string pid, AtStartHandler atStart, ProgressHandler progress, AtEndHandler atEnd) {
+    // Virtual solely so that we can subclass for testing, because mocks don't work with delegates.
+    public virtual void Download(string pid, AtStartHandler atStart, ProgressHandler progress, AtEndHandler atEnd) {
       var page = GetIphonePage(pid);
 
       if (!page.IsAvailable) {
