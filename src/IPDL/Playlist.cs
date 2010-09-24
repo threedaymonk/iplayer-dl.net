@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -49,7 +50,9 @@ namespace IPDL {
 
     public string Title {
       get {
-        return (string)document.Element(Playlist.playlistNS + "title");
+        return String.Format("{0} ({1})",
+                             (string)document.Element(Playlist.playlistNS + "title"),
+                             Items.First().Group);
       }
     }
   }

@@ -24,8 +24,8 @@ public class PlaylistTest {
     this.playlist = new Playlist(ReadFile("b00t4vjz"));
   }
 
-  [Test] public void ShouldHaveTitle() {
-    Assert.AreEqual("Afternoon Play: Depth Charge", playlist.Title);
+  [Test] public void ShouldHaveTitleWithPidSuffix() {
+    Assert.AreEqual("Afternoon Play: Depth Charge (b00t4vjz)", playlist.Title);
   }
 
   [Test] public void ShouldHaveOnePlaylistItem() {
@@ -56,8 +56,8 @@ public class PlaylistTest {
     this.playlist = new Playlist(ReadFile("b00td8g6"));
   }
 
-  [Test] public void ShouldHaveTitle() {
-    Assert.AreEqual("BBC Proms: 2010: Sondheim's 80th Birthday Celebration", playlist.Title);
+  [Test] public void ShouldHaveTitleWithPidSuffix() {
+    Assert.AreEqual("BBC Proms: 2010: Sondheim's 80th Birthday Celebration (b00td8g6)", playlist.Title);
   }
 
   [Test] public void ShouldHaveOnePlaylistItem() {
