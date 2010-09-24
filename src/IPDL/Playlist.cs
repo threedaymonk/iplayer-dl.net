@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace IPDL {
   public class PlaylistItem {
@@ -50,9 +51,17 @@ namespace IPDL {
 
     public string Title {
       get {
-        return String.Format("{0} ({1})",
-                             (string)document.Element(Playlist.playlistNS + "title"),
-                             Items.First().Group);
+        var pids =
+          from item in document.Descendants(Playlist.playlistNS + "item")
+          let grp = (string)item.Attribute("group")
+          where grp != null
+          select grp;
+        var title =
+          Regex.Replace(
+            (string)document.Element(Playlist.playlistNS + "title"),
+            @"\b(\d{2})/(\d{2})/(\d{4})\b",
+            @"${3}-${2}-${1}");
+        return String.Format("{0} ({1})", title, pids.First());
       }
     }
   }

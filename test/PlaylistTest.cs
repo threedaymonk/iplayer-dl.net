@@ -80,3 +80,15 @@ public class PlaylistTest {
     Assert.AreEqual("default", playlist.Items.First().Alternate);
   }
 }
+
+[TestFixture] public class DatestampedPlaylistTest : PlaylistTest {
+  private Playlist playlist;
+
+  [SetUp] public void SetUp() {
+    this.playlist = new Playlist(ReadFile("b00tt6b2"));
+  }
+
+  [Test] public void ShouldRearrangeDateIntoYMDOrder() {
+    Assert.AreEqual("In Our Time: 2010-09-23 (b00tt6b2)", playlist.Title);
+  }
+}
